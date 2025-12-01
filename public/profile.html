@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Email Signature Generator</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Montserrat', sans-serif; }
+    </style>
+    
+    <!-- Unified Authentication -->
+    <script src="https://apps.ironcrestsoftware.com/auth/ironcrest-auth.js"></script>
+</head>
+<body class="bg-gray-50 has-sidebar">
+
+    <!-- Header -->
+    <div id="app-header"></div>
+    
+    <!-- Sidebar -->
+    <div id="app-sidebar"></div>
+    
+    <div id="app-content" class="flex-1">
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-display font-bold text-gray-900 mb-2">My Profile</h1>
+            <p class="text-gray-600">Manage your account settings and preferences</p>
+        </div>
+
+        <!-- Account Info Card -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-6 border border-gray-200">
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                        <span id="profile-initials">U</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900" id="profile-email">Loading...</h2>
+                        <div class="flex items-center gap-2 mt-1" id="profile-badges">
+                            <!-- Badges loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600" id="stat-signatures">0</div>
+                    <div class="text-sm text-gray-600 mt-1">Saved Signatures</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600" id="stat-logins">0</div>
+                    <div class="text-sm text-gray-600 mt-1">Total Logins</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600" id="stat-member-since">2025</div>
+                    <div class="text-sm text-gray-600 mt-1">Member Since</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Information Form -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-6 border border-gray-200">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900">
+                    <i class="fas fa-user-circle text-blue-600"></i> Your Profile Information
+                </h3>
+                <button onclick="saveProfile()" id="save-profile-btn" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">
+                    <i class="fas fa-save mr-2"></i>Save Changes
+                </button>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-6">
+                <i class="fas fa-info-circle"></i> Fill out your information once, and it will auto-populate in all new signatures you create.
+            </p>
+            
+            <form id="profile-form" class="space-y-6">
+                <!-- Identity Section -->
+                <div class="border-b border-gray-200 pb-6">
+                    <h4 class="font-bold text-gray-900 mb-4"><i class="fas fa-user mr-2"></i>Personal Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                            <input type="text" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Job Title</label>
+                            <input type="text" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Senior Developer">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Pronouns</label>
+                            <input type="text" name="pronouns" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="he/him">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Company Section -->
+                <div class="border-b border-gray-200 pb-6">
+                    <h4 class="font-bold text-gray-900 mb-4"><i class="fas fa-building mr-2"></i>Company Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Company Name</label>
+                            <input type="text" name="company_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Acme Corp">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Logo URL</label>
+                            <input type="url" name="logo_url" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://example.com/logo.png">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="border-b border-gray-200 pb-6">
+                    <h4 class="font-bold text-gray-900 mb-4"><i class="fas fa-envelope mr-2"></i>Contact Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                            <input type="tel" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Website</label>
+                            <input type="url" name="website" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://yourwebsite.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Calendly / Booking Link</label>
+                            <input type="url" name="calendly" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://calendly.com/yourname">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Links Section -->
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4"><i class="fab fa-linkedin mr-2"></i>Social Media</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">LinkedIn</label>
+                            <input type="url" name="linkedin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://linkedin.com/in/yourname">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Twitter / X</label>
+                            <input type="url" name="twitter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://x.com/yourname">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">GitHub</label>
+                            <input type="url" name="github" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://github.com/yourname">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <a href="app.html" class="bg-gradient-to-br from-blue-600 to-purple-600 text-white rounded-xl p-6 hover:shadow-xl transition-all transform hover:scale-105">
+                <i class="fas fa-signature text-3xl mb-3"></i>
+                <h3 class="text-xl font-bold mb-2">Create New Signature</h3>
+                <p class="text-blue-100 text-sm">Design a new email signature with our templates</p>
+            </a>
+            
+            <a href="signatures.html" class="bg-gradient-to-br from-green-600 to-teal-600 text-white rounded-xl p-6 hover:shadow-xl transition-all transform hover:scale-105">
+                <i class="fas fa-folder text-3xl mb-3"></i>
+                <h3 class="text-xl font-bold mb-2">My Signatures</h3>
+                <p class="text-green-100 text-sm">View and manage all your saved signatures</p>
+            </a>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="bg-red-50 rounded-xl border-2 border-red-200 p-6">
+            <h3 class="text-lg font-bold text-red-900 mb-2">
+                <i class="fas fa-exclamation-triangle"></i> Danger Zone
+            </h3>
+            <p class="text-red-700 text-sm mb-4">These actions cannot be undone.</p>
+            <button onclick="confirmDeleteAccount()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                Delete Account
+            </button>
+        </div>
+    </main>
+
+    </div> <!-- Close app-content -->
+    
+    <!-- Footer -->
+    <div id="app-footer"></div>
+
+    <!-- Scripts -->
+    <script>const API_BASE = '../api';</script>
+    <script src="js/auth-check.js"></script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/app-registry.js?v=11"></script>
+    <script>
+        window.IRONCREST_APP = 'email-signature';
+        window.IRONCREST_LAYOUT = 'app';
+    </script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/layout-v2.js?v=11"></script>
+    <script>
+        // Load user profile data
+        async function loadProfile() {
+            try {
+                // Get user info from auth validation
+                const authResponse = await fetch(`${API_BASE}/auth.php?action=validate`, {
+                    credentials: 'include'
+                });
+                const authData = await authResponse.json();
+                
+                if (!authData.success) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                const user = authData.user;
+                
+                // Update profile display
+                document.getElementById('profile-email').textContent = user.email;
+                const initials = user.email.substring(0, 2).toUpperCase();
+                document.getElementById('profile-initials').textContent = initials;
+                
+                // Display tier badges
+                const badgesDiv = document.getElementById('profile-badges');
+                if (user.is_grandfathered) {
+                    badgesDiv.innerHTML = `
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
+                            <i class="fas fa-crown mr-1"></i> Pro (Grandfathered)
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                            All Features Free Forever
+                        </span>
+                    `;
+                } else {
+                    const tierName = user.account_tier.charAt(0).toUpperCase() + user.account_tier.slice(1);
+                    const tierColors = {
+                        free: 'bg-gray-100 text-gray-800',
+                        basic: 'bg-blue-100 text-blue-800',
+                        pro: 'bg-purple-100 text-purple-800',
+                        enterprise: 'bg-yellow-100 text-yellow-800'
+                    };
+                    badgesDiv.innerHTML = `
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${tierColors[user.account_tier]}">
+                            ${tierName} Plan
+                        </span>
+                        ${user.account_tier === 'free' ? `
+                            <a href="upgrade.html" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
+                                <i class="fas fa-arrow-up mr-1"></i> Upgrade
+                            </a>
+                        ` : ''}
+                    `;
+                }
+                
+                // Load preferences and populate form
+                const prefsResponse = await fetch(`${API_BASE}/preferences.php`, {
+                    credentials: 'include'
+                });
+                const prefsData = await prefsResponse.json();
+                
+                if (prefsData.success && prefsData.preferences) {
+                    populateForm(prefsData.preferences);
+                }
+                
+                // TODO: Load actual stats from database
+                document.getElementById('stat-signatures').textContent = '0';
+                document.getElementById('stat-logins').textContent = '1';
+                document.getElementById('stat-member-since').textContent = new Date().getFullYear();
+                
+            } catch (error) {
+                console.error('Error loading profile:', error);
+            }
+        }
+        
+        // Populate form with saved preferences
+        function populateForm(prefs) {
+            const form = document.getElementById('profile-form');
+            if (!form) return;
+            
+            // Set form values
+            form.querySelector('[name="name"]').value = prefs.name || '';
+            form.querySelector('[name="title"]').value = prefs.title || '';
+            form.querySelector('[name="pronouns"]').value = prefs.pronouns || '';
+            form.querySelector('[name="company_name"]').value = prefs.company_name || '';
+            form.querySelector('[name="logo_url"]').value = prefs.logo_url || '';
+            form.querySelector('[name="phone"]').value = prefs.phone || '';
+            form.querySelector('[name="website"]').value = prefs.website || '';
+            form.querySelector('[name="calendly"]').value = prefs.calendly || '';
+            
+            // Social links
+            const socialLinks = prefs.social_links || {};
+            form.querySelector('[name="linkedin"]').value = socialLinks.linkedin || '';
+            form.querySelector('[name="twitter"]').value = socialLinks.twitter || socialLinks.x || '';
+            form.querySelector('[name="github"]').value = socialLinks.github || '';
+        }
+        
+        // Save profile information
+        async function saveProfile() {
+            const form = document.getElementById('profile-form');
+            const btn = document.getElementById('save-profile-btn');
+            
+            // Disable button
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+            
+            try {
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get('name'),
+                    title: formData.get('title'),
+                    pronouns: formData.get('pronouns'),
+                    company_name: formData.get('company_name'),
+                    logo_url: formData.get('logo_url'),
+                    email: formData.get('email') || '',
+                    phone: formData.get('phone'),
+                    website: formData.get('website'),
+                    calendly: formData.get('calendly'),
+                    social_links: {
+                        linkedin: formData.get('linkedin'),
+                        twitter: formData.get('twitter'),
+                        x: formData.get('twitter'), // Store as both
+                        github: formData.get('github')
+                    },
+                    branding_preferences: {},
+                    addons: {}
+                };
+                
+                const response = await fetch(`${API_BASE}/preferences.php`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    btn.innerHTML = '<i class="fas fa-check mr-2"></i>Saved!';
+                    btn.classList.add('bg-green-600');
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Changes';
+                        btn.classList.remove('bg-green-600');
+                        btn.disabled = false;
+                    }, 2000);
+                } else {
+                    throw new Error(result.error || 'Save failed');
+                }
+            } catch (error) {
+                console.error('Save error:', error);
+                alert('Failed to save profile. Please try again.');
+                btn.innerHTML = '<i class="fas fa-save mr-2"></i>Save Changes';
+                btn.disabled = false;
+            }
+        }
+        
+        function confirmDeleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                if (confirm('This will permanently delete all your data. Are you absolutely sure?')) {
+                    alert('Account deletion is not yet implemented. Please contact support.');
+                }
+            }
+        }
+        
+        // Load profile on page load
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Wait for IroncrestAuth to be ready
+            let attempts = 0;
+            while (!window.IroncrestAuth && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            if (!window.IroncrestAuth) {
+                console.error('IroncrestAuth not loaded');
+                return;
+            }
+            
+            // Wait for auth helpers to be ready
+            let authAttempts = 0;
+            while (!window.checkAuth && authAttempts < 30) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                authAttempts++;
+            }
+            
+            // Check authentication
+            try {
+                if (!window.checkAuth) {
+                    console.error('Auth helpers not available');
+                    window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+                    return;
+                }
+                
+                const user = await window.checkAuth();
+                
+                if (!user) {
+                    window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+                    return;
+                }
+                
+                // Authentication successful - page will continue loading
+            } catch (error) {
+                console.error('Auth error:', error);
+                window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+            }
+        });
+    </script>
+</body>
+</html>

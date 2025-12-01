@@ -1,0 +1,326 @@
+/* Ironcrest Email Signature Generator - Custom Styles */
+
+/* Progress Steps */
+.step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step-number {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+}
+
+.step.active .step-number {
+    background: linear-gradient(135deg, #2A3B8F 0%, #2B68C1 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(43, 104, 193, 0.3);
+}
+
+.step-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.step.active .step-label {
+    color: #1f2937;
+}
+
+.step-divider {
+    width: 3rem;
+    height: 2px;
+    background: #e5e7eb;
+}
+
+/* Form Styles */
+.form-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.form-section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-section-title i {
+    color: #2B68C1;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #2B68C1;
+    box-shadow: 0 0 0 3px rgba(43, 104, 193, 0.1);
+}
+
+.form-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #2A3B8F 0%, #2B68C1 100%);
+    color: white;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(43, 104, 193, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43, 104, 193, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: white;
+    color: #374151;
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border: 2px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    border-color: #2B68C1;
+    color: #2B68C1;
+}
+
+/* Template Cards */
+.template-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 2px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.template-card:hover {
+    border-color: #2B68C1;
+    box-shadow: 0 8px 24px rgba(43, 104, 193, 0.15);
+    transform: translateY(-4px);
+}
+
+.template-card.selected {
+    border-color: #2B68C1;
+    background: linear-gradient(135deg, rgba(42, 59, 143, 0.05) 0%, rgba(43, 104, 193, 0.05) 100%);
+}
+
+.template-card .check-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    background: #2B68C1;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.template-card.selected .check-badge {
+    display: flex;
+}
+
+/* Export Options */
+.export-option {
+    background: white;
+    border: 3px solid #d1d5db;
+    border-radius: 1rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.export-option:hover {
+    border-color: #2B68C1;
+    background: linear-gradient(135deg, rgba(42, 59, 143, 0.03) 0%, rgba(43, 104, 193, 0.03) 100%);
+    box-shadow: 0 12px 32px rgba(43, 104, 193, 0.2);
+    transform: translateY(-6px);
+}
+
+.export-option i {
+    transition: transform 0.3s;
+}
+
+.export-option:hover i {
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    z-index: 200;
+    animation: toastSlideIn 0.3s ease-out;
+}
+
+.toast.hidden {
+    display: none;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Preview Dark Mode */
+#signature-preview.dark-mode {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+#signature-preview.dark-mode * {
+    background-color: transparent !important;
+}
+
+#signature-preview.dark-mode table,
+#signature-preview.dark-mode div {
+    background: transparent !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .step-label {
+        display: none;
+    }
+    
+    .step-divider {
+        width: 1.5rem;
+    }
+}
+
+/* Loading State */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Animations */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

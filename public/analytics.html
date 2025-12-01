@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Email Signature Generator</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Montserrat', sans-serif; }
+    </style>
+    
+    <!-- Unified Authentication -->
+    <script src="https://apps.ironcrestsoftware.com/auth/ironcrest-auth.js"></script>
+</head>
+<body class="bg-gray-50 has-sidebar">
+
+    <!-- Header -->
+    <div id="app-header"></div>
+    
+    <!-- Sidebar -->
+    <div id="app-sidebar"></div>
+    
+    <div id="app-content" class="flex-1">
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-display font-bold text-gray-900 mb-2">
+                <i class="fas fa-chart-line text-blue-600"></i> Analytics
+            </h1>
+            <p class="text-gray-600">Track your email signature performance</p>
+        </div>
+
+        <!-- Date Range Selector -->
+        <div class="mb-6 flex items-center gap-4">
+            <label class="text-sm font-semibold text-gray-700">Date Range:</label>
+            <select id="date-range" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+            </select>
+        </div>
+
+        <!-- Signature Selector -->
+        <div class="mb-8">
+            <label class="text-sm font-semibold text-gray-700 mb-2 block">Select Signature:</label>
+            <div id="signature-selector" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="text-center py-12 text-gray-400">
+                    <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+                    <p>Loading signatures...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Dashboard (hidden until signature selected) -->
+        <div id="analytics-dashboard" class="hidden">
+            
+            <!-- Overview Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Views -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-sm font-semibold text-gray-600">Total Views</div>
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-eye text-blue-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900" id="stat-views">0</div>
+                    <div class="text-xs text-gray-500 mt-1">Signature displays</div>
+                </div>
+                
+                <!-- Total Clicks -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-sm font-semibold text-gray-600">Total Clicks</div>
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-mouse-pointer text-green-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900" id="stat-clicks">0</div>
+                    <div class="text-xs text-gray-500 mt-1">Link interactions</div>
+                </div>
+                
+                <!-- Click-Through Rate -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-sm font-semibold text-gray-600">Click Rate (CTR)</div>
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-percentage text-purple-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900" id="stat-ctr">0%</div>
+                    <div class="text-xs text-gray-500 mt-1">Engagement rate</div>
+                </div>
+                
+                <!-- Unique Viewers -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="text-sm font-semibold text-gray-600">Unique Viewers</div>
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-yellow-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-900" id="stat-unique">0</div>
+                    <div class="text-xs text-gray-500 mt-1">Different recipients</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Views & Clicks Over Time -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">
+                        <i class="fas fa-chart-line text-blue-600 mr-2"></i>Views & Clicks Over Time
+                    </h3>
+                    <canvas id="timeline-chart"></canvas>
+                </div>
+                
+                <!-- Device Breakdown -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">
+                        <i class="fas fa-mobile-alt text-green-600 mr-2"></i>Device Breakdown
+                    </h3>
+                    <canvas id="device-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Links -->
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200 mb-8">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">
+                    <i class="fas fa-link text-purple-600 mr-2"></i>Top Performing Links
+                </h3>
+                <div id="top-links" class="space-y-3">
+                    <p class="text-gray-500 text-center py-4">No click data yet</p>
+                </div>
+            </div>
+
+            <!-- Geographic Data -->
+            <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">
+                    <i class="fas fa-globe text-blue-600 mr-2"></i>Geographic Distribution
+                </h3>
+                <div id="geographic-data" class="space-y-2">
+                    <p class="text-gray-500 text-center py-4">No geographic data yet</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Detailed Analytics Modal -->
+    <div id="analytics-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" style="z-index: 9999;">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold" id="modal-signature-title">Signature Analytics</h2>
+                    <p class="text-blue-100 text-sm" id="modal-signature-template"></p>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+                
+                <!-- Key Metrics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 rounded-lg p-4 text-center">
+                        <div class="text-3xl font-bold text-blue-600" id="modal-stat-views">0</div>
+                        <div class="text-sm text-gray-600 mt-1">Total Views</div>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4 text-center">
+                        <div class="text-3xl font-bold text-green-600" id="modal-stat-clicks">0</div>
+                        <div class="text-sm text-gray-600 mt-1">Total Clicks</div>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4 text-center">
+                        <div class="text-3xl font-bold text-purple-600" id="modal-stat-ctr">0%</div>
+                        <div class="text-sm text-gray-600 mt-1">Click Rate</div>
+                    </div>
+                    <div class="bg-yellow-50 rounded-lg p-4 text-center">
+                        <div class="text-3xl font-bold text-yellow-600" id="modal-stat-unique">0</div>
+                        <div class="text-sm text-gray-600 mt-1">Unique Viewers</div>
+                    </div>
+                </div>
+
+                <!-- Three Column Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Column 1: Link Performance -->
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <i class="fas fa-link text-blue-600"></i>
+                            Link Performance
+                        </h3>
+                        <div id="modal-links" class="space-y-3">
+                            <p class="text-gray-500 text-sm text-center py-4">No data</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 2: Device & Email Clients -->
+                    <div class="space-y-4">
+                        <!-- Device Breakdown -->
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="fas fa-mobile-alt text-green-600"></i>
+                                Devices
+                            </h3>
+                            <div id="modal-devices" class="space-y-2">
+                                <p class="text-gray-500 text-sm text-center py-4">No data</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Clients -->
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="fas fa-envelope text-purple-600"></i>
+                                Email Clients
+                            </h3>
+                            <div id="modal-clients" class="space-y-2">
+                                <p class="text-gray-500 text-sm text-center py-4">No data</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 3: Geographic & Time -->
+                    <div class="space-y-4">
+                        <!-- Top Countries -->
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="fas fa-globe text-blue-600"></i>
+                                Top Countries
+                            </h3>
+                            <div id="modal-countries" class="space-y-2">
+                                <p class="text-gray-500 text-sm text-center py-4">No data</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="fas fa-clock text-yellow-600"></i>
+                                Recent Activity
+                            </h3>
+                            <div id="modal-activity" class="space-y-2">
+                                <p class="text-gray-500 text-sm text-center py-4">No data</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Timeline Chart -->
+                <div class="mt-6 bg-gray-50 rounded-xl p-4">
+                    <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-chart-line text-blue-600"></i>
+                        Performance Over Time
+                    </h3>
+                    <canvas id="modal-timeline-chart"></canvas>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    </div> <!-- Close app-content -->
+    
+    <!-- Footer -->
+    <div id="app-footer"></div>
+
+    <!-- Scripts -->
+    <script>const API_BASE = '../api';</script>
+    <script src="js/auth-check.js"></script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/app-registry.js?v=11"></script>
+    <script>
+        window.IRONCREST_APP = 'email-signature';
+        window.IRONCREST_LAYOUT = 'app';
+    </script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/layout-v2.js?v=11"></script>
+    <script>
+        let currentSignatureId = null;
+        let timelineChart = null;
+        let deviceChart = null;
+        let modalTimelineChart = null;
+        let currentModalData = null;
+
+        // Load user's signatures
+        async function loadSignatures() {
+            try {
+                const response = await fetch(`${API_BASE}/analytics.php?action=user&range=30`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load signatures');
+                }
+                
+                displaySignatureSelector(data.signatures);
+                
+            } catch (error) {
+                console.error('Error loading signatures:', error);
+                document.getElementById('signature-selector').innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-exclamation-circle text-red-500 text-3xl mb-3"></i>
+                        <p class="text-red-600">Failed to load signatures</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display signature selector
+        function displaySignatureSelector(signatures) {
+            const container = document.getElementById('signature-selector');
+            
+            if (signatures.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-chart-line text-gray-300 text-5xl mb-4"></i>
+                        <p class="text-gray-600 mb-4">No signatures with analytics yet</p>
+                        <a href="app.html" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                            Create a Signature
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = signatures.map(sig => `
+                <button onclick="openDetailedModal(${sig.id}, '${(sig.title || 'Untitled').replace(/'/g, "\\'")}', '${sig.template_key}')" class="text-left bg-white rounded-xl shadow-md p-6 border-2 border-gray-200 hover:border-blue-400 hover:shadow-xl transition cursor-pointer transform hover:scale-105">
+                    <h3 class="font-bold text-gray-900 mb-2">${sig.title || 'Untitled'}</h3>
+                    <div class="text-sm text-gray-600 mb-3">
+                        <i class="fas fa-palette mr-1"></i>${sig.template_key}
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                            <div class="text-lg font-bold text-blue-600">${sig.total_views || 0}</div>
+                            <div class="text-xs text-gray-500">Views</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-green-600">${sig.total_clicks || 0}</div>
+                            <div class="text-xs text-gray-500">Clicks</div>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-purple-600">${sig.ctr || 0}%</div>
+                            <div class="text-xs text-gray-500">CTR</div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center text-xs text-blue-600 font-semibold">
+                        <i class="fas fa-chart-bar mr-1"></i>Click for detailed analytics
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        // Select a signature and load its analytics
+        async function selectSignature(signatureId) {
+            currentSignatureId = signatureId;
+            const dateRange = document.getElementById('date-range').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/analytics.php?action=signature&id=${signatureId}&range=${dateRange}`, {
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to load analytics');
+                }
+                
+                displayAnalytics(result.data);
+                
+            } catch (error) {
+                console.error('Error loading analytics:', error);
+                alert('Failed to load analytics. Please try again.');
+            }
+        }
+
+        // Display analytics data
+        function displayAnalytics(data) {
+            // Show dashboard
+            document.getElementById('analytics-dashboard').classList.remove('hidden');
+            
+            // Update stats
+            document.getElementById('stat-views').textContent = data.totals.total_views.toLocaleString();
+            document.getElementById('stat-clicks').textContent = data.totals.total_clicks.toLocaleString();
+            document.getElementById('stat-ctr').textContent = data.totals.ctr + '%';
+            document.getElementById('stat-unique').textContent = data.totals.unique_viewers.toLocaleString();
+            
+            // Update timeline chart
+            updateTimelineChart(data.daily);
+            
+            // Update device chart
+            updateDeviceChart(data.totals);
+            
+            // Update top links
+            updateTopLinks(data.top_links);
+            
+            // Update geographic data
+            updateGeographic(data.geographic);
+            
+            // Scroll to dashboard
+            document.getElementById('analytics-dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update timeline chart
+        function updateTimelineChart(daily) {
+            const ctx = document.getElementById('timeline-chart');
+            
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+            
+            timelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: daily.map(d => new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+                    datasets: [
+                        {
+                            label: 'Views',
+                            data: daily.map(d => d.total_views),
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Clicks',
+                            data: daily.map(d => d.total_clicks),
+                            borderColor: 'rgb(34, 197, 94)',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update device chart
+        function updateDeviceChart(totals) {
+            const ctx = document.getElementById('device-chart');
+            
+            if (deviceChart) {
+                deviceChart.destroy();
+            }
+            
+            deviceChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Desktop', 'Mobile', 'Tablet'],
+                    datasets: [{
+                        data: [totals.desktop_views, totals.mobile_views, totals.tablet_views],
+                        backgroundColor: [
+                            'rgb(59, 130, 246)',
+                            'rgb(34, 197, 94)',
+                            'rgb(168, 85, 247)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update top links
+        function updateTopLinks(links) {
+            const container = document.getElementById('top-links');
+            
+            if (links.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No click data yet</p>';
+                return;
+            }
+            
+            const totalClicks = links.reduce((sum, link) => sum + parseInt(link.click_count), 0);
+            
+            container.innerHTML = links.map(link => {
+                const percentage = totalClicks > 0 ? ((link.click_count / totalClicks) * 100).toFixed(1) : 0;
+                const icon = getLinkIcon(link.link_type);
+                
+                return `
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="${icon} text-gray-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-semibold text-gray-900 capitalize">${link.link_type}</span>
+                                <span class="text-sm text-gray-600">${link.click_count} clicks (${percentage}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update geographic data
+        function updateGeographic(geographic) {
+            const container = document.getElementById('geographic-data');
+            
+            if (geographic.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No geographic data yet</p>';
+                return;
+            }
+            
+            const totalViews = geographic.reduce((sum, geo) => sum + parseInt(geo.view_count), 0);
+            
+            container.innerHTML = geographic.map(geo => {
+                const percentage = totalViews > 0 ? ((geo.view_count / totalViews) * 100).toFixed(1) : 0;
+                
+                return `
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                        <span class="font-semibold text-gray-900">${getCountryName(geo.country)}</span>
+                        <div class="flex items-center gap-3">
+                            <div class="w-32 bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                            </div>
+                            <span class="text-sm text-gray-600 w-20 text-right">${geo.view_count} (${percentage}%)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Helper: Get icon for link type
+        function getLinkIcon(type) {
+            const icons = {
+                email: 'fas fa-envelope',
+                phone: 'fas fa-phone',
+                website: 'fas fa-globe',
+                linkedin: 'fab fa-linkedin',
+                twitter: 'fab fa-twitter',
+                github: 'fab fa-github',
+                calendly: 'fas fa-calendar',
+                custom: 'fas fa-link'
+            };
+            return icons[type] || 'fas fa-link';
+        }
+
+        // Helper: Get country name from code
+        function getCountryName(code) {
+            // Simple country code to name mapping (add more as needed)
+            const countries = {
+                US: 'United States',
+                GB: 'United Kingdom',
+                CA: 'Canada',
+                AU: 'Australia',
+                DE: 'Germany',
+                FR: 'France',
+                ES: 'Spain',
+                IT: 'Italy',
+                JP: 'Japan',
+                CN: 'China',
+                IN: 'India',
+                BR: 'Brazil',
+                MX: 'Mexico'
+            };
+            return countries[code] || code;
+        }
+
+        // Date range change handler
+        document.getElementById('date-range').addEventListener('change', () => {
+            if (currentSignatureId) {
+                selectSignature(currentSignatureId);
+            }
+        });
+
+        // Open detailed analytics modal
+        async function openDetailedModal(signatureId, title, templateKey) {
+            const dateRange = document.getElementById('date-range').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/analytics.php?action=signature&id=${signatureId}&range=${dateRange}`, {
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to load analytics');
+                }
+                
+                currentModalData = result.data;
+                
+                // Update modal header
+                document.getElementById('modal-signature-title').textContent = title;
+                document.getElementById('modal-signature-template').textContent = `Template: ${templateKey}`;
+                
+                // Update stats
+                document.getElementById('modal-stat-views').textContent = result.data.totals.total_views.toLocaleString();
+                document.getElementById('modal-stat-clicks').textContent = result.data.totals.total_clicks.toLocaleString();
+                document.getElementById('modal-stat-ctr').textContent = result.data.totals.ctr + '%';
+                document.getElementById('modal-stat-unique').textContent = result.data.totals.unique_viewers.toLocaleString();
+                
+                // Populate columns
+                populateModalLinks(result.data.top_links, result.data.totals);
+                populateModalDevices(result.data.totals);
+                populateModalCountries(result.data.geographic);
+                populateModalActivity(result.data.daily);
+                
+                // Update timeline chart
+                updateModalTimeline(result.data.daily);
+                
+                // Show modal
+                document.getElementById('analytics-modal').classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error loading detailed analytics:', error);
+                alert('Failed to load detailed analytics. Please try again.');
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('analytics-modal').classList.add('hidden');
+            if (modalTimelineChart) {
+                modalTimelineChart.destroy();
+                modalTimelineChart = null;
+            }
+        }
+        
+        // Populate link performance
+        function populateModalLinks(links, totals) {
+            const container = document.getElementById('modal-links');
+            
+            if (links.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-4">No clicks yet</p>';
+                return;
+            }
+            
+            const totalClicks = links.reduce((sum, link) => sum + parseInt(link.click_count), 0);
+            
+            container.innerHTML = links.slice(0, 5).map(link => {
+                const percentage = totalClicks > 0 ? ((link.click_count / totalClicks) * 100).toFixed(0) : 0;
+                const icon = getLinkIcon(link.link_type);
+                
+                return `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="${icon} text-gray-600"></i>
+                            <span class="text-sm font-semibold capitalize">${link.link_type}</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-bold text-gray-900">${link.click_count}</div>
+                            <div class="text-xs text-gray-500">${percentage}%</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Populate device breakdown
+        function populateModalDevices(totals) {
+            const container = document.getElementById('modal-devices');
+            const total = totals.desktop_views + totals.mobile_views + totals.tablet_views;
+            
+            if (total === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-4">No data</p>';
+                return;
+            }
+            
+            const devices = [
+                { name: 'Desktop', count: totals.desktop_views, icon: 'fas fa-desktop', color: 'blue' },
+                { name: 'Mobile', count: totals.mobile_views, icon: 'fas fa-mobile-alt', color: 'green' },
+                { name: 'Tablet', count: totals.tablet_views, icon: 'fas fa-tablet-alt', color: 'purple' }
+            ];
+            
+            container.innerHTML = devices.map(device => {
+                const percentage = total > 0 ? ((device.count / total) * 100).toFixed(0) : 0;
+                return `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="${device.icon} text-${device.color}-600"></i>
+                            <span class="text-sm font-semibold">${device.name}</span>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-bold text-gray-900">${device.count}</div>
+                            <div class="text-xs text-gray-500">${percentage}%</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Populate countries
+        function populateModalCountries(geographic) {
+            const container = document.getElementById('modal-countries');
+            
+            if (geographic.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-4">No data</p>';
+                return;
+            }
+            
+            container.innerHTML = geographic.slice(0, 5).map(geo => `
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-semibold">${getCountryName(geo.country)}</span>
+                    <span class="text-sm font-bold text-gray-900">${geo.view_count}</span>
+                </div>
+            `).join('');
+        }
+        
+        // Populate recent activity
+        function populateModalActivity(daily) {
+            const container = document.getElementById('modal-activity');
+            
+            if (daily.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-4">No activity</p>';
+                return;
+            }
+            
+            // Show last 5 days with activity
+            const recentDays = daily.slice(-5).reverse();
+            
+            container.innerHTML = recentDays.map(day => `
+                <div class="text-xs">
+                    <div class="font-semibold text-gray-900">${new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                    <div class="text-gray-600">${day.total_views} views, ${day.total_clicks} clicks</div>
+                </div>
+            `).join('');
+        }
+        
+        // Update modal timeline chart
+        function updateModalTimeline(daily) {
+            const ctx = document.getElementById('modal-timeline-chart');
+            
+            if (modalTimelineChart) {
+                modalTimelineChart.destroy();
+            }
+            
+            modalTimelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: daily.map(d => new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+                    datasets: [
+                        {
+                            label: 'Views',
+                            data: daily.map(d => d.total_views),
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Clicks',
+                            data: daily.map(d => d.total_clicks),
+                            borderColor: 'rgb(34, 197, 94)',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('analytics-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'analytics-modal') {
+                closeModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Load signatures on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Wait for IroncrestAuth to be ready
+            let attempts = 0;
+            while (!window.IroncrestAuth && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            if (!window.IroncrestAuth) {
+                console.error('IroncrestAuth not loaded');
+                return;
+            }
+            
+            // Check authentication
+            try {
+                console.log('Checking authentication...');
+                
+                // Wait a bit more for auth helpers to be ready
+                let authAttempts = 0;
+                while (!window.checkAuth && authAttempts < 30) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    authAttempts++;
+                }
+                
+                if (!window.checkAuth) {
+                    console.error('Auth helpers not available');
+                    window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+                    return;
+                }
+                
+                const user = await window.checkAuth();
+                console.log('Auth result:', user);
+                
+                if (!user) {
+                    console.log('Not authenticated, redirecting to login...');
+                    window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+                    return;
+                }
+                
+                console.log('Authenticated as:', user.email);
+                loadSignatures();
+            } catch (error) {
+                console.error('Auth error:', error);
+                alert('Authentication error: ' + error.message);
+                // Fallback: redirect to login
+                window.location.href = 'https://apps.ironcrestsoftware.com/auth.html';
+            }
+        });
+    </script>
+</body>
+</html>

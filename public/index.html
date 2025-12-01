@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Email Signature Generator - Better Than Wisestamp | Ironcrest</title>
+    <meta name="description" content="Create professional email signatures in minutes. 11 premium templates, save & manage multiple signatures, completely free. Optional account for saved signatures. The best free alternative to Wisestamp.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-display {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2A3B8F 0%, #2B68C1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #2A3B8F 0%, #2B68C1 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(43, 104, 193, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        .hero-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(42, 59, 143, 0.08) 0%, transparent 70%);
+            animation: float 15s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(43, 104, 193, 0.15);
+        }
+        .comparison-row {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+        .hero-visual {
+            background: linear-gradient(135deg, rgba(42, 59, 143, 0.05) 0%, rgba(43, 104, 193, 0.05) 100%);
+            border: 2px solid rgba(43, 104, 193, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .signature-preview {
+            animation: slideIn 1s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .pulse-ring {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+    
+    <!-- Unified Authentication -->
+    <script src="https://apps.ironcrestsoftware.com/auth/ironcrest-auth.js"></script>
+</head>
+<body class="bg-white">
+
+    <!-- Header (loaded via layout.js) -->
+    <div id="app-header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20 px-4 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Column - Content -->
+                <div class="text-center lg:text-left relative z-10">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-50 to-blue-50 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-fade-in-up border-2 border-purple-200">
+                        <i class="fas fa-crown pulse-ring"></i>
+                        <span>🔥 BETA: Sign Up Now = Grandfathered Forever (Before Paid Launch)</span>
+                    </div>
+                    
+                    <!-- Headline -->
+                    <h1 class="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 animate-fade-in-up animate-delay-1">
+                        Email Signatures<br>
+                        <span class="gradient-text">Like Wisestamp,</span><br>
+                        But Actually Free
+                    </h1>
+                    
+                    <!-- Subheadline -->
+                    <p class="text-lg md:text-xl lg:text-2xl text-gray-600 mb-8 animate-fade-in-up animate-delay-2">
+                        Create professional HTML email signatures in minutes. 11 premium templates. 
+                        <strong class="text-purple-700">Beta users get grandfathered</strong> - sign up now for lifetime free access before we launch paid tiers.
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 animate-fade-in-up animate-delay-3">
+                        <a href="app.html" class="gradient-bg text-white px-8 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition inline-flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-rocket"></i>
+                            Create Your Signature Free
+                        </a>
+                        <a href="#comparison" class="bg-white text-gray-700 px-8 py-4 rounded-lg font-bold text-lg border-2 border-gray-300 hover:border-blue-500 transition inline-flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
+                            <i class="fas fa-chart-bar"></i>
+                            Compare vs Wisestamp
+                        </a>
+                    </div>
+                    
+                    <!-- Social Proof -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-gray-600 text-sm animate-fade-in-up animate-delay-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span>No Credit Card</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span>No Signup</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span>No Watermark</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <span>Instant Download</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Visual -->
+                <div class="relative lg:block hidden">
+                    <!-- Signature Preview Card -->
+                    <div class="signature-preview hero-visual rounded-2xl p-8 shadow-2xl">
+                        <div class="bg-white rounded-xl p-6 shadow-lg mb-4">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                    JD
+                                </div>
+                                <div class="text-left">
+                                    <div class="font-bold text-xl text-gray-900">John Doe</div>
+                                    <div class="text-gray-600">Senior Developer</div>
+                                    <div class="text-blue-600 text-sm">john@company.com</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 pt-3 border-t border-gray-200">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </div>
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Template Options -->
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition cursor-pointer border-2 border-blue-500">
+                                <div class="h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded mb-2"></div>
+                                <div class="text-xs text-center text-gray-600 font-semibold">Minimal</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition cursor-pointer border-2 border-gray-200">
+                                <div class="h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded mb-2"></div>
+                                <div class="text-xs text-center text-gray-600 font-semibold">Corporate</div>
+                            </div>
+                            <div class="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition cursor-pointer border-2 border-gray-200">
+                                <div class="h-12 bg-gradient-to-br from-green-100 to-green-200 rounded mb-2"></div>
+                                <div class="text-xs text-center text-gray-600 font-semibold">Modern</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold gradient-text">11</div>
+                                <div class="text-xs text-gray-600">Templates</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-purple-700">$0</div>
+                                <div class="text-xs text-purple-600 font-semibold">Beta Users</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold gradient-text">2min</div>
+                                <div class="text-xs text-gray-600">Setup</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Icons -->
+                    <div class="absolute -top-6 -right-6 w-16 h-16 gradient-bg rounded-full flex items-center justify-center text-white text-2xl shadow-xl animate-bounce">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white text-xl shadow-xl" style="animation: bounce 2s infinite 0.5s;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Everything You Need,<br>
+                    <span class="gradient-text">Nothing You Don't</span>
+                </h2>
+                <p class="text-xl text-gray-600">Professional features without the premium price tag</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">11 Premium Templates</h3>
+                    <p class="text-gray-600">Choose from 11 professionally designed templates. From minimal to bold, corporate to creative - all completely free.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Live Preview</h3>
+                    <p class="text-gray-600">See your signature update in real-time as you type. What you see is what you get.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Email Delivery</h3>
+                    <p class="text-gray-600">Get your signature delivered with step-by-step install guides for Gmail, Outlook, and Apple Mail.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Social Media Links</h3>
+                    <p class="text-gray-600">Add LinkedIn, Twitter, GitHub, and more. Connect with your audience everywhere.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Mobile Responsive</h3>
+                    <p class="text-gray-600">Your signature looks perfect on every device. Desktop, tablet, or mobile.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Save & Manage</h3>
+                    <p class="text-gray-600">Create a free account to save multiple signatures. Edit, copy, delete - full CRUD control over your signatures.</p>
+                </div>
+                
+                <!-- Feature 7 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Profile Auto-Fill</h3>
+                    <p class="text-gray-600">Fill your profile once, and all new signatures auto-populate with your info. No repetitive data entry.</p>
+                </div>
+                
+                <!-- Feature 8 -->
+                <div class="feature-card bg-white p-8 rounded-xl border-2 border-gray-200">
+                    <div class="w-14 h-14 gradient-bg rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Auto-Save</h3>
+                    <p class="text-gray-600">Changes automatically save as you edit. Never lose your work. Switch templates instantly.</p>
+                </div>
+                
+                <!-- Feature 9 -->
+                <div class="feature-card bg-gradient-to-br from-purple-50 to-blue-50 p-8 rounded-xl border-2 border-purple-200">
+                    <div class="w-14 h-14 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center text-white text-2xl mb-4">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-purple-900">Beta Grandfathered Access</h3>
+                    <p class="text-purple-800"><strong>Beta only: Sign up now = Free forever.</strong> Beta users get lifetime access to ALL features before paid launch. No trials, no limits, no future charges. Lock in your free account during beta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="py-20 px-4 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Why Pay for <span class="gradient-text">Wisestamp?</span>
+                </h2>
+                <p class="text-xl text-gray-600">Get the same features without the $8-15/month price tag</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <!-- Header -->
+                <div class="grid grid-cols-3 gap-4 p-6 bg-gray-50 border-b-2 border-gray-200">
+                    <div class="font-bold text-gray-700">Feature</div>
+                    <div class="text-center">
+                        <div class="font-bold text-gray-900 mb-1">Ironcrest</div>
+                        <div class="text-sm bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1 rounded-full font-bold inline-block">FREE (BETA)</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="font-bold text-gray-900 mb-1">Wisestamp</div>
+                        <div class="text-sm text-gray-600">$8-15/mo</div>
+                    </div>
+                </div>
+                
+                <!-- Rows -->
+                <div class="divide-y divide-gray-200">
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Premium Templates</div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-purple-600 mt-1 font-bold">11 templates</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">Limited</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Save Multiple Signatures</div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-purple-600 mt-1 font-bold">Unlimited</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-dollar-sign text-yellow-600 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">Paid only</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Live Preview</div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Social Media Links</div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Profile Auto-Fill</div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-purple-600 mt-1 font-bold">Yes</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-times-circle text-red-500 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">No</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Auto-Save Changes</div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-purple-600 mt-1 font-bold">Yes</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-question-circle text-gray-400 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">Unknown</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Try Before Signup</div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                        <div class="text-center"><i class="fas fa-times-circle text-red-500 text-2xl"></i></div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center">
+                        <div class="text-gray-700">Analytics & Tracking</div>
+                        <div class="text-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <div class="text-xs text-purple-600 mt-1 font-bold">View & Click Tracking</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-dollar-sign text-yellow-600 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">Paid only</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center bg-green-50">
+                        <div class="text-gray-700 font-semibold">No Watermark</div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                        <div class="text-center"><i class="fas fa-times-circle text-red-500 text-2xl"></i></div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center bg-green-50">
+                        <div class="text-gray-700 font-semibold">Unlimited Signatures</div>
+                        <div class="text-center"><i class="fas fa-check-circle text-green-500 text-2xl"></i></div>
+                        <div class="text-center"><i class="fas fa-times-circle text-red-500 text-2xl"></i></div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center bg-green-50">
+                        <div class="text-gray-700 font-semibold">Early Adopter Bonus</div>
+                        <div class="text-center">
+                            <i class="fas fa-star text-yellow-500 text-2xl"></i>
+                            <div class="text-xs text-green-600 mt-1 font-semibold">All features free!</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-times-circle text-red-500 text-2xl"></i>
+                            <div class="text-xs text-gray-600 mt-1">N/A</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-row grid grid-cols-3 gap-4 p-6 items-center bg-green-50">
+                        <div class="text-gray-700 font-semibold">Price</div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-600">$0</div>
+                            <div class="text-sm text-gray-600">Forever</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-gray-900">$96+</div>
+                            <div class="text-sm text-gray-600">Per Year</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="app.html" class="gradient-bg text-white px-10 py-5 rounded-lg font-bold text-xl hover:opacity-90 transition inline-flex items-center gap-3">
+                    <i class="fas fa-rocket"></i>
+                    Start Creating for Free
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Create Your Signature in <span class="gradient-text">3 Simple Steps</span>
+                </h2>
+                <p class="text-xl text-gray-600">Professional results in under 5 minutes</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+                        1
+                    </div>
+                    <h3 class="font-bold text-2xl mb-4">Choose Template</h3>
+                    <p class="text-gray-600 text-lg">Pick from 11 professionally designed templates that match your style and brand.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+                        2
+                    </div>
+                    <h3 class="font-bold text-2xl mb-4">Fill Details</h3>
+                    <p class="text-gray-600 text-lg">Add your name, title, contact info, and social links. See live preview as you type.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 gradient-bg rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
+                        3
+                    </div>
+                    <h3 class="font-bold text-2xl mb-4">Export & Use</h3>
+                    <p class="text-gray-600 text-lg">Copy HTML, download file, or email it to yourself with install guides included.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 gradient-bg">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">
+                Ready to Create Your Professional Signature?
+            </h2>
+            <p class="text-xl mb-8 opacity-90">
+                Join thousands who've ditched expensive tools for our free solution
+            </p>
+            <a href="app.html" class="bg-white text-blue-700 px-10 py-5 rounded-lg font-bold text-xl hover:bg-gray-100 transition inline-flex items-center gap-3">
+                <i class="fas fa-rocket"></i>
+                Get Started Free
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <p class="mt-6 text-sm opacity-75">No credit card • No signup • No catch</p>
+        </div>
+    </section>
+
+    <!-- Footer (loaded via layout.js) -->
+    <div id="app-footer"></div>
+
+    <!-- Scripts -->
+    <script>const API_BASE = '../api';</script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/app-registry.js?v=12"></script>
+    <script>
+        window.IRONCREST_APP = 'email-signature';
+        window.IRONCREST_LAYOUT = 'marketing';
+    </script>
+    <script src="https://apps.ironcrestsoftware.com/shared/js/layout-v2.js?v=13"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+    "id": "email-signature",
+    "name": "Email Signature Generator",
+    "description": "Create professional HTML email signatures in minutes. Choose from 10+ premium templates. Completely free, no signup required.",
+    "icon": "✍️",
+    "status": "live",
+    "version": "1.0.0",
+    "urls": {
+        "app": "/email-signature/public/",
+        "docs": "/email-signature/README.md"
+    },
+    "features": [
+        {
+            "icon": "palette",
+            "label": "10+ Templates"
+        },
+        {
+            "icon": "preview",
+            "label": "Live Preview"
+        },
+        {
+            "icon": "mail",
+            "label": "Email Delivery"
+        },
+        {
+            "icon": "free_cancellation",
+            "label": "100% Free"
+        }
+    ],
+    "metadata": {
+        "pricing": "Free",
+        "type": "Lead Generation Tool",
+        "category": "Marketing",
+        "tags": ["email", "signature", "marketing", "branding", "free-tool"]
+    },
+    "author": {
+        "name": "Ironcrest Software",
+        "url": "https://ironcrestsoftware.com"
+    },
+    "created": "2025-01-21",
+    "updated": "2025-01-21"
+}

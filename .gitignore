@@ -1,0 +1,71 @@
+# Dependencies
+/vendor/
+composer.lock
+node_modules/
+
+# Frontend builds
+public/dist/
+public/assets/build/
+
+# Configuration
+config/config.php
+
+# Uploads
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+.fleet/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Databases
+*.sqlite
+*.db
+
+# Environment
+.env
+.env.local
+
+# Common sensitive files to NEVER upload
+.env
+*.env
+.env.local
+env/
+config.php
+wp-config.php
+secrets.json
+secret.txt
+*.key
+*.pem
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Node / build stuff (if any)
+node_modules/
+dist/
+build/
+
+# Editor/workspace files
+.vscode/
+.idea/
+
+*.md
+*.MD

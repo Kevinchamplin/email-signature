@@ -1,0 +1,28 @@
+{
+    "name": "ironcrest/email-signature-generator",
+    "description": "Professional email signature generator - Free lead-gen tool",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Ironcrest Software",
+            "email": "contact@ironcrestsoftware.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "ext-gd": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ironcrest\\Signature\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
