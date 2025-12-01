@@ -114,6 +114,6 @@ If you’re evaluating me for a full-stack/product role, this codebase demonstra
 
 - Email: kevin@kevinchamplin.com
 - LinkedIn: https://www.linkedin.com/in/kevinchamplin/
-- Portfolio: https://ironcrestsoftware.com
+- Portfolio: https://kevinchamplin.com/portfolio.php
 
 Thanks for reviewing! I’m excited to bring this level of ownership and polish to your team.
